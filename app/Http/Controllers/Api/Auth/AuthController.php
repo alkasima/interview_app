@@ -77,11 +77,19 @@ class AuthController extends Controller
             }
 
             $user = User::where('email', $request->email)->first();
+
+            if(!$user->hasVerifiedEmail()){
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Email not verified',
+                ], 401);    
+            }else {
             return response()->json([
                 'status' => true,
                 'message' => 'User logged in successfully',
                 'token' => $user->createToken("API TOKEN")->plainTextToken
             ], 200);
+        }
 
         } catch (\Throwable $th) {
             return response()->json([
