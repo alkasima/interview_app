@@ -99,4 +99,8 @@ class AuthController extends Controller
         }
     }
 
+    public function searchUser(Request $request) {
+        dd("Hello");
+    }
+
 }
